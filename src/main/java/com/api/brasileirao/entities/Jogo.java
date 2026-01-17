@@ -17,13 +17,15 @@ public class Jogo {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "time_mandante_id", nullable = false)
+    @JoinColumn(name = "time_mandante", nullable = false)
     private Time timeMandante;
 
     @ManyToOne
-    @JoinColumn(name = "time_visitante_id", nullable = false)
+    @JoinColumn(name = "time_visitante", nullable = false)
     private Time timeVisitante;
 
     private Integer golsTimeMandante;
     private Integer golsTimeVisitante;
+
+    private Integer publicoPagante;
 }
