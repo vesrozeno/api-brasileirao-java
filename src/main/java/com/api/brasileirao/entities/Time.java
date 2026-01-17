@@ -21,4 +21,5 @@ public class Time {
     private String sigla;
     @Column(length = 2)
     private String uf;
+    private String estadio;
 }
