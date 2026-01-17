@@ -1,4 +1,4 @@
-package br.com.cbf.brasileirao;
+package com.api.brasileirao;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

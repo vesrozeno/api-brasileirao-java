@@ -1,4 +1,4 @@
-package br.com.cbf.brasileirao.entities;
+package com.api.brasileirao.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
