@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.brasileirao.entities.Time;
+import com.api.brasileirao.dto.TimeDTO;
 import com.api.brasileirao.services.TimeService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,20 +24,19 @@ public class TimeRestController {
     private TimeService timeService;
 
     @GetMapping
-    public ResponseEntity<List<Time>> getTimes() {
+    public ResponseEntity<List<TimeDTO>> getTimes() {
         return ResponseEntity.ok().body(timeService.listarTimes());
     }
 
     @Operation(summary = "Lista os times", description = "Retorna a lista de times cadastrados no Brasileirão")
     @GetMapping(value = "{id}")
-    public ResponseEntity<Time> getTime(@PathVariable Integer id) {
+    public ResponseEntity<TimeDTO> getTime(@PathVariable Integer id) {
         return ResponseEntity.ok().body(timeService.obterTime(id));
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrarTime(@RequestBody Time time) {
-        timeService.cadastrarTime(time);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<TimeDTO> cadastrarTime(@RequestBody TimeDTO time) throws Exception {
+        return ResponseEntity.ok().body(timeService.cadastrarTime(time));
     }
 
 }

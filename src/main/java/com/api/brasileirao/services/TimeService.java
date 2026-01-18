@@ -1,10 +1,12 @@
 package com.api.brasileirao.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.api.brasileirao.dto.TimeDTO;
 import com.api.brasileirao.entities.Time;
 import com.api.brasileirao.repository.TimeRepository;
 
@@ -14,16 +16,41 @@ public class TimeService {
     @Autowired
     private TimeRepository repository;
 
-    public void cadastrarTime(Time time) {
-        repository.save(time);
+    public TimeDTO cadastrarTime(TimeDTO time) throws Exception {
+        Time entity = toEntity(time);
+        if (time.getId() == null) {
+            entity = repository.save(entity);
+            return toDTO(entity);
+
+        } else {
+            throw new Exception("Time já existe");
+        }
     }
 
-    public List<Time> listarTimes() {
-        return repository.findAll();
+    public List<TimeDTO> listarTimes() {
+        return repository.findAll().stream().map(entity -> toDTO(entity)).collect(Collectors.toList());
     }
 
-    public Time obterTime(Integer id) {
-        return repository.findById(id).get();
+    public TimeDTO obterTime(Integer id) {
+        return toDTO(repository.findById(id).get());
+    }
+
+    private Time toEntity(TimeDTO time) {
+        Time entity = new Time();
+        entity.setNome(time.getNome());
+        entity.setEstadio(time.getEstadio());
+        entity.setUf(time.getUf());
+        entity.setSigla(time.getSigla());
+        return entity;
+    }
+
+    private TimeDTO toDTO(Time time) {
+        TimeDTO dto = new TimeDTO();
+        dto.setNome(time.getNome());
+        dto.setEstadio(time.getEstadio());
+        dto.setUf(time.getUf());
+        dto.setSigla(time.getSigla());
+        return dto;
     }
 
 }
