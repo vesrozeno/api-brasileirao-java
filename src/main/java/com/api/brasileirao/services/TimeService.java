@@ -17,14 +17,17 @@ public class TimeService {
     private TimeRepository repository;
 
     public TimeDTO cadastrarTime(TimeDTO time) throws Exception {
-        Time entity = toEntity(time);
-        if (time.getId() == null) {
-            entity = repository.save(entity);
-            return toDTO(entity);
+        if (timeJaExiste(time.getNome(), 0)) {
+            throw new Exception(String.format("Time %s já existe.", time.getNome()));
 
         } else {
-            throw new Exception("Time já existe");
+            Time timeEntity = toEntity(time);
+            return toDTO(repository.save(timeEntity));
         }
+    }
+
+    private Boolean timeJaExiste(String nome, Integer id) {
+        return !repository.findByNomeIgnoreCaseAndAndIdNot(nome, id).isEmpty();
     }
 
     public List<TimeDTO> listarTimes() {
